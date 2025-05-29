@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== Setmore Appointments ===
 
-Contributors: Anitha/Rajesh/Sankavi
-Tags: Free, appointments, appointment, scheduling, software, booking, calendar, agenda, management, online, diary, widget, Setmore
+Contributors: Anitha, Sankavi
+Tags: Free, appointments, scheduling, booking, Setmore
 Requires at least: 3.7.2
-Tested up to: 6.6.1
-Stable tag: 12.3
+Tested up to: 6.8.1
+Stable tag: 12.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

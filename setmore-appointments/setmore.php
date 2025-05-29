@@ -4,7 +4,7 @@
 Plugin Name: Setmore
 Plugin URI: https://www.setmore.com/
 Description: Setmore Appointments ��� Take customer appointments online for free
-Version: 12.3
+Version: 12.4
 Author: Setmore Appointments
 Author URI: https://www.setmore.com/?utm_source=wordpress%20plugin%20directory&utm_medium=integrations&utm_campaign=wp_plugin_home
 License: GPL
@@ -25,7 +25,6 @@ function deleteSetmoreConfig()
   send_user_analytics($booking_page_url);
   delete_option('setmore_booking_page_url');
   delete_option('languageOption');
-  delete_option('setmore_booking_page_version');
 }
 
 function send_user_analytics($booking_page_url)
@@ -81,7 +80,6 @@ function register_plugin_settings()
     'default' => 'English',
   );
   register_setting('register-settings-group', 'languageOption', $args);
-  register_setting('register-settings-group', 'setmore_booking_page_version');
 }
 /*===========================================
 Create an admin menu to me loaded
@@ -137,7 +135,7 @@ function addIframe_setmore()
   $bookingButtonName = get_option('setmore_booking_page_text');
   $bookingButtonLang = get_option('languageOption');
   $url = $bookingPageUrl . "?lang=" . $bookingButtonLang;
-  $i = '<p><script id="setmore_script" type="text/javascript" src = "' . esc_url(plugins_url('/script/setmoreFancyBox.js', __FILE__)) . '"></script><a id="Setmore_button_iframe" style="float:none" href=' . $url . '> <img border="none" src="https://assets.setmore.com/setmore/images/2.0/Settings/book-now-black.svg" alt="Book an appointment with Personnel Calendar using SetMore" /></a></p>';
+  $i = '<p><script id="setmore_script" type="text/javascript" src = "' . esc_url(plugins_url('/script/setmoreFancyBox.js', __FILE__)) . '"></script><a id="Setmore_button_iframe" style="float:none" href=' . $url . '> <img border="none" src="https://assets.setmore.com/integration/images/newdesign/others/book-now-button.svg" alt="Book an appointment with Personnel Calendar using SetMore" /></a></p>';
   return $i;
 }
 
@@ -161,7 +159,6 @@ if (!function_exists("setmore_extra_menu_info_page")) {
     $scriptUrl = get_bloginfo("wpurl");
     $savedBookingPageUrl = get_option('setmore_booking_page_url');
     $savedBookingPageLang = get_option('languageOption');
-    $savedBookingPageVersion = get_option('setmore_booking_page_version');
     ?>
 
     <head>
@@ -189,8 +186,6 @@ if (!function_exists("setmore_extra_menu_info_page")) {
         </header>
         <!-- Hero -->
         <section id="optionsCreation">
-          <input type="hidden" id="setmore_booking_page_version" name="setmore_booking_page_version"
-            value="<?php echo $savedBookingPageVersion ?>" id="setmore_booking_page_version">
           <input type="hidden" id="setmore_booking_page_url" name="setmore_booking_page_url"
             value="<?php echo $savedBookingPageUrl ?>" id="setmore_booking_page_url">
           <input type="hidden" id="languageOption" name="languageOption" value="<?php echo $savedBookingPageLang ?>"
@@ -420,8 +415,7 @@ if (!function_exists("setmore_extra_menu_info_page")) {
                 <label class="g-input-label">Customize booking experience and more</label>
 
                 <div class="g-link">
-                  <?php $version = (get_option('setmore_booking_page_version') == 'v2') ? "https://go.setmore.com" : "https://my.setmore.com" ?>
-                  <a href="<?php echo $version ?>" target="_blank">Open your Setmore dashboard</a>
+                  <a href="https://go.setmore.com" target="_blank">Open your Setmore dashboard</a>
                   <i class="g-data-tips copy_setmorewp_url" data-tips="Copy">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"
                       class="centerer">

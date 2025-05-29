@@ -1,7 +1,7 @@
 window.onload = function () {
 	var bookingPageUrl = document.querySelector("#setmore_booking_page_url").value;
 
-	if (bookingPageUrl && bookingPageUrl != "https://my.setmore.com" && bookingPageUrl != null && bookingPageUrl != "") {
+	if (bookingPageUrl && bookingPageUrl != null && bookingPageUrl != "") {
 		document.querySelector("#third").style.display = "block";
 		document.querySelector("#connectBlock").style.display = "none";
 	}
@@ -57,7 +57,7 @@ window.onload = function () {
 			let copyele = (event.target.tagName == "svg") ?event.target.parentNode : event.target;
 			copyele.removeAttribute("data-tips");
 			copyele.setAttribute("data-tips","Copy");
-			let secretInfo = "https://my.setmore.com";
+			let secretInfo = "https://go.setmore.com";
 			if(copyele && copyele.classList.contains("mr-1")){
 				secretInfo = event.target.parentNode.parentNode.querySelector("#booking_page_url").href;
 			}
@@ -66,9 +66,8 @@ window.onload = function () {
 		})
 	})
 	
-	async function sendAnalytics(bookingpage, event) {
+	async function sendAnalytics(companyKey, event) {
 		const currentTimestampMicros = Date.now() * 1000;
-		const companyKey = bookingpage.split('/').pop();
 		const measurementId = `G-QGCR29L2YV`;
 		const apiSecret = `c8RPSMB0SSyNd8XfOonPBg`;
 		const userType = event.target.id === "signup" ? "new_customer" : "customer";
@@ -102,7 +101,7 @@ window.onload = function () {
 		}
 	}
 	
-	function saveBookingPageConfiguration(setmoreBookingPageURl,languageOption,version){
+	function saveBookingPageConfiguration(setmoreBookingPageURl,languageOption){
 		if(setmoreBookingPageURl){
 			// let formattedSetmoreBookingURL = new URL(setmoreBookingPageURl);
 			// if(!formattedSetmoreBookingURL.searchParams.get("source")){
@@ -113,9 +112,6 @@ window.onload = function () {
 		if(languageOption){
 			document.querySelector("#languageOption").value = languageOption;
 			// formattedSetmoreBookingURL.searchParams.set("lang","wordpress");
-		}
-		if(version){
-			document.querySelector("#setmore_booking_page_version").value = version;
 		}
 		document.querySelector("#submit").click();
 	}
@@ -128,24 +124,27 @@ window.onload = function () {
 
 	function setmoreButtonHandler(event) {
 		var siteUrl = event.target.getAttribute("siteurl");
+		var isSignup = event.target.id === "signup";
 		var windowWidth  = 520;
 		var windowHeight = 680;
 		var posLeft = (window.screen.width / 2) - ((windowWidth / 2) + 10);
 	    var posTop = (window.screen.height / 2) - ((windowHeight / 2) + 20);  
-			var setmoreLiveUrl = "https://my.setmore.com/integration/wordpress/oauth?siteUrl="+siteUrl;
-		if(event.target.id === "signup")   {
-			setmoreLiveUrl = "https://www.setmore.com/integrations-start-now?source=wordpress&redirectUrl="+siteUrl+"&utm_source=wordpress%20plugin%20internal&utm_medium=integrations&utm_campaign=wp_plugin_internal_signup";
+			var setmoreLiveUrl = "https://integration.setmore.com/full/integrations/marketplace/pid1/oauthcheck?siteUrl="+siteUrl;
+		if(isSignup)   {
+			setmoreLiveUrl = "https://signup.setmore.com/start-now?source=wordpress&redirectUrl="+siteUrl+"&utm_source=wordpress%20plugin%20internal&utm_medium=integrations&utm_campaign=wp_plugin_internal_signup";
 		}
 		var popupWindow = window.open(setmoreLiveUrl, "_blank", 'scrollbars=yes,resizable=0,width='+windowWidth+', height='+windowHeight+', top='+posTop+', left='+posLeft+'');
 		popupWindow.focus();
 		var pollTimer = window.setInterval(function () {
-			console.log('the popupwindow', popupWindow.location.href);
 			if (popupWindow.location.href.indexOf("status=true") != -1) {
 				const urlParams = new URLSearchParams(popupWindow.location.search);
+				let bookingUrl = "";
+				const companyKey = urlParams.get("companyKey");
+				bookingUrl = "https://booking.setmore.com/scheduleappointment/" + companyKey;
 				document.querySelector("#third").style.display = "none";
 				document.querySelector("#connectBlock").style.display = "none";
-				saveBookingPageConfiguration(urlParams.get("bookingpageurl"),"English",urlParams.get("version"));
-				sendAnalytics(urlParams.get("bookingpageurl"), event);
+				saveBookingPageConfiguration(bookingUrl,"English");
+				sendAnalytics(companyKey, event);
 				window.clearInterval(pollTimer);
 				popupWindow.close();
 			}

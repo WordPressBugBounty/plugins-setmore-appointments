@@ -29,7 +29,7 @@ class setmore_widget extends WP_Widget
             <script id="setmore_script" type="text/javascript"
                 src="<?php echo $baseUrl ?>/wp-content/plugins/setmore-appointments/script/setmoreFancyBox.js"></script>
             <a id="Setmore_button_iframe" style="float:none" href="<?php echo $url ?>"><img border="none"
-                    src="https://assets.setmore.com/setmore/images/2.0/Settings/book-now-black.svg"
+                    src="https://assets.setmore.com/integration/images/newdesign/others/book-now-button.svg"
                     alt="Book an appointment with Personnel Calendar using SetMore" /></a>
         </p>
 
