@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: Setmore
+Plugin Name: Setmore Appointments
 Plugin URI: https://www.setmore.com/
 Description: Setmore Appointments ��� Take customer appointments online for free
-Version: 12.4
+Version: 12.5
 Author: Setmore Appointments
 Author URI: https://www.setmore.com/?utm_source=wordpress%20plugin%20directory&utm_medium=integrations&utm_campaign=wp_plugin_home
 License: GPL
