@@ -1,10 +1,14 @@
 <?php
+$setmore_config_path = plugin_dir_path(__FILE__) . 'config.php';
+if (file_exists($setmore_config_path)) {
+  require_once $setmore_config_path;
+}
 
 /*
-Plugin Name: Setmore Appointments
+Plugin Name: Setmore
 Plugin URI: https://www.setmore.com/
 Description: Setmore Appointments ��� Take customer appointments online for free
-Version: 12.5
+Version: 12.8
 Author: Setmore Appointments
 Author URI: https://www.setmore.com/?utm_source=wordpress%20plugin%20directory&utm_medium=integrations&utm_campaign=wp_plugin_home
 License: GPL
@@ -135,7 +139,7 @@ function addIframe_setmore()
   $bookingButtonName = get_option('setmore_booking_page_text');
   $bookingButtonLang = get_option('languageOption');
   $url = $bookingPageUrl . "?lang=" . $bookingButtonLang;
-  $i = '<p><script id="setmore_script" type="text/javascript" src = "' . esc_url(plugins_url('/script/setmoreFancyBox.js', __FILE__)) . '"></script><a id="Setmore_button_iframe" style="float:none" href=' . $url . '> <img border="none" src="https://assets.setmore.com/integration/images/newdesign/others/book-now-button.svg" alt="Book an appointment with Personnel Calendar using SetMore" /></a></p>';
+  $i = '<p><script id="setmore_script" type="text/javascript" src = "' . esc_url('https://assets.setmore.com/integration/book-now/live/v1/anywhere-book-now.js') . '"></script><button id="Anywhere_button_iframe" class="anywhere-book-now-button" style=" background-color: #000; color: #fff; border: none; padding: 12px 18px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; " data-booking-url="' . esc_url($url) . '" data-new-tab="false"> Book now </button></p>';
   return $i;
 }
 
@@ -572,8 +576,14 @@ if (!function_exists("setmore_extra_menu_info_page")) {
       <?php submit_button(); ?>
     </form>
     <br />
+    <script type="text/javascript">
+      var SetmoreConfig = <?php echo json_encode([
+        'ga4MeasurementId' => 'G-QGCR29L2YV',
+        'ga4ApiSecret'     => defined('GA4_API_SECRET') ? GA4_API_SECRET : '',
+      ]); ?>;
+    </script>
     <script id="setmore_script" type="text/javascript"
-      src="<?php echo $scriptUrl ?>/wp-content/plugins/setmore-appointments/script/setmoreFormScript.js"></script>
+      src="<?php echo esc_url(plugins_url('/script/setmoreFormScript.js', __FILE__)) ?>"></script>
     <?php
   }
 } ?>

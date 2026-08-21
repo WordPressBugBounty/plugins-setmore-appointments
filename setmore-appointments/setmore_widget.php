@@ -22,15 +22,12 @@ class setmore_widget extends WP_Widget
         <?php $bookingPageUrl = get_option('setmore_booking_page_url');
         $bookingButtonLang = empty($instance['languageOption']) ? get_option('languageOption') : $instance['languageOption'];
         $url = $bookingPageUrl . "?lang=" . $bookingButtonLang;
-        $baseUrl = get_bloginfo('wpurl');
         ?>
 
         <p>
             <script id="setmore_script" type="text/javascript"
-                src="<?php echo $baseUrl ?>/wp-content/plugins/setmore-appointments/script/setmoreFancyBox.js"></script>
-            <a id="Setmore_button_iframe" style="float:none" href="<?php echo $url ?>"><img border="none"
-                    src="https://assets.setmore.com/integration/images/newdesign/others/book-now-button.svg"
-                    alt="Book an appointment with Personnel Calendar using SetMore" /></a>
+                src="<?php echo esc_url('https://assets.setmore.com/integration/book-now/live/v1/anywhere-book-now.js') ?>"></script>
+            <button id="Anywhere_button_iframe" class="anywhere-book-now-button" style=" background-color: #000; color: #fff; border: none; padding: 12px 18px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; " data-booking-url="<?php echo esc_url($url) ?>" data-new-tab="false"> Book now </button>
         </p>
 
         <?php

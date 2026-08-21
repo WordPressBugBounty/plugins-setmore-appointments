@@ -68,8 +68,8 @@ window.onload = function () {
 	
 	async function sendAnalytics(companyKey, event) {
 		const currentTimestampMicros = Date.now() * 1000;
-		const measurementId = `G-QGCR29L2YV`;
-		const apiSecret = `c8RPSMB0SSyNd8XfOonPBg`;
+		const measurementId = SetmoreConfig.ga4MeasurementId;
+		const apiSecret = SetmoreConfig.ga4ApiSecret;
 		const userType = event.target.id === "signup" ? "new_customer" : "customer";
 		try {
 			const response = await fetch(`https://www.google-analytics.com/mp/collect?measurement_id=${measurementId}&api_secret=${apiSecret}`, {
